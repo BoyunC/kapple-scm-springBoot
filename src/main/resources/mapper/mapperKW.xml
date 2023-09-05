@@ -26,7 +26,7 @@
     <!-- 공급사 리스트 -->
     <select id="getAll" resultMap="supplierMap" parameterType="String">
 		<![CDATA[
-        select s.suppl_no,t.transport_no,transport_category,transport_charge,additional_condition,suppl_name,ceo_name,category,phone
+        select *
         from supplier s join proposal p
             on s.suppl_no=p.suppl_no join component c
                 on p.compo_no=c.compo_no join transportation t
@@ -64,4 +64,7 @@
         where compo_name=#{compo_name} and p.suppl_no=#{suppl_no}
         ]]>
 	</select>
+    <select id="getProposaltoContract" resultMap="proposalMap">
+        select * from
+    </select>
 </mapper>
