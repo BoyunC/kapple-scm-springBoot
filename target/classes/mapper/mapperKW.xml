@@ -26,7 +26,7 @@
     <!-- 공급사 리스트 -->
     <select id="getAll" resultMap="supplierMap" parameterType="String">
 		<![CDATA[
-        select s.suppl_no,t.transport_no,transport_category,transport_charge,additional_condition,suppl_name,ceo_name,category,phone
+        select *
         from supplier s join proposal p
             on s.suppl_no=p.suppl_no join component c
                 on p.compo_no=c.compo_no join transportation t
@@ -57,11 +57,32 @@
 
     <select id="getProposal" resultMap="proposalMap">
 		<![CDATA[
-        select p.proposal_no, suppl_name, compo_name, price, quantity, defective_rate, quality_grade, prod_period
+        select *
         from proposal p full outer join supplier s
                                         on p.suppl_no=s.suppl_no full outer join component c
                                                                                  on p.compo_no=c.compo_no
         where compo_name=#{compo_name} and p.suppl_no=#{suppl_no}
         ]]>
 	</select>
+    <select id="getProposaltoContract" resultMap="proposalMap">
+        select *
+        from proposal p full outer join supplier s
+                on p.suppl_no=s.suppl_no full outer join component c
+                on p.compo_no=c.compo_no
+        where p.proposal_no=#{proposal_no}
+    </select>
+    <insert id="saveContract">
+        insert into contract values (#{contract_no},#{suppl_no},#{compo_no},#{start_date},#{end_date},#{contract_date},#{proposal_no})
+    </insert>
+    <update id="upProposalStat">
+        update proposal set status='1' where proposal_no=#{proposal_no}
+    </update>
+    <select id="lastSEQ">
+            SELECT
+            LAST_NUMBER
+            FROM
+            USER_SEQUENCES
+            WHERE
+            SEQUENCE_NAME = 'CONTRACT_SEQ'
+    </select>
 </mapper>

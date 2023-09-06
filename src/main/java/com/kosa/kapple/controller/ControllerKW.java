@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.kosa.kapple.domain.ContractVO;
 import com.kosa.kapple.domain.ProposalVO;
 import com.kosa.kapple.domain.SupplierVO;
 import com.kosa.kapple.service.ServiceKW;
@@ -12,11 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -45,8 +45,17 @@ public List<SupplierVO> selectedSuppl(@PathVariable String compo_name){
     public ProposalVO getProposal(@PathVariable String compo_name,@PathVariable String suppl_no){
         ProposalVO proposal=service.getProposal(compo_name,suppl_no);
 
+        System.out.println(compo_name);
+        System.out.println(suppl_no);
+        System.out.println(proposal);
+
         return proposal;
-}
+    }
+    @GetMapping("/contract/{proposal_no}")
+    public ProposalVO getProposaltoContract(@PathVariable String proposal_no){
+
+    return service.getProposaltoContract(proposal_no);
+    }
 //@GetMapping("/proposal/{compo_name}/{suppl_no}")
 //public ResponseEntity<String> getProposal(@PathVariable String compo_name, @PathVariable String suppl_no){
 //    ProposalVO proposal=service.getProposal(compo_name,suppl_no);
@@ -69,5 +78,15 @@ public List<SupplierVO> selectedSuppl(@PathVariable String compo_name){
 //
 //
 //    }
+    @PostMapping("/contract")
+    public ResponseEntity<ContractVO> contract(@RequestBody ContractVO contract){
+        ContractVO savedContract = service.saveContract(contract);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{no}")
+                .buildAndExpand(savedContract.getContract_no())
+                .toUri(); //만든 유저 객체 정보를 보여주기 위해서 uri를 만들어 줌
+
+        return ResponseEntity.created(location).build();
+    }
 
 }
