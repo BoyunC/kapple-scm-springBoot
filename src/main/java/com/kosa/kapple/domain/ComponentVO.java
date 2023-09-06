@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//@JsonFilter("Component")
 public class ComponentVO {
 	private String compo_no;
 	private String compo_name;

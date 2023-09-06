@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//@JsonFilter("Supplier")
 public class SupplierVO {
 	private String suppl_no;
 	private TransportationVO transport;
