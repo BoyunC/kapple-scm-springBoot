@@ -25,6 +25,7 @@
 		]]>
     </insert>
 
+
     <!-- 공급사 파일 등록 -->
     <insert id="saveFile">
         <![CDATA[
@@ -159,5 +160,6 @@
             supplier2 s INNER JOIN suppl_logo l
         ON s.suppl_no = l.suppl_no;
     </select>
+
 
 </mapper>
