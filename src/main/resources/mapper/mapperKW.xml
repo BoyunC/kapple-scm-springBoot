@@ -113,16 +113,16 @@
         <result property="unit" column="unit"/>
         <result property="prod_name" column="prod_name"/>
         <result property="prod_detail" column="prod_detail"/>
-        <collection property="model" resultMap="modelMap"></collection>
+<!--        <collection property="model" resultMap="modelMap"></collection>-->
     </resultMap>
-    <resultMap type="ModelVO" id="modelMap">
-        <id property="model_no" column="model_no"/>
-        <result property="model_no" column="model_no"/>
-        <result property="capacity" column="capacity"/>
-        <result property="color" column="color"/>
-        <result property="release_date" column="release_date"/>
-        <result property="model_name" column="model_name"/>
-    </resultMap>
+<!--    <resultMap type="ModelVO" id="modelMap">-->
+<!--        <id property="model_no" column="model_no"/>-->
+<!--        <result property="model_no" column="model_no"/>-->
+<!--        <result property="capacity" column="capacity"/>-->
+<!--        <result property="color" column="color"/>-->
+<!--        <result property="release_date" column="release_date"/>-->
+<!--        <result property="model_name" column="model_name"/>-->
+<!--    </resultMap>-->
     <resultMap type="SalePredictVO" id="salePredictMap">
         <id property="sale_predict_no" column="sale_predict_no"/>
         <result property="sale_predict_no" column="sale_predict_no"/>
