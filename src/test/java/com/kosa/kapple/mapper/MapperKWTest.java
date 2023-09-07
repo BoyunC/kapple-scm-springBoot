@@ -17,6 +17,6 @@ class MapperKWTest {
 
     @Test
     void test1() {
-        System.out.println(mapper.getProposaltoContract("PROP315"));
+        System.out.println(mapper.allContracts());
     }
 }

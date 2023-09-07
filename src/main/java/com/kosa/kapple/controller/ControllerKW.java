@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+
 import com.kosa.kapple.domain.ContractVO;
 import com.kosa.kapple.domain.ProposalVO;
+import com.kosa.kapple.domain.RetailerVO;
 import com.kosa.kapple.domain.SupplierVO;
 import com.kosa.kapple.service.ServiceKW;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,16 +47,12 @@ public List<SupplierVO> selectedSuppl(@PathVariable String compo_name){
     public ProposalVO getProposal(@PathVariable String compo_name,@PathVariable String suppl_no){
         ProposalVO proposal=service.getProposal(compo_name,suppl_no);
 
-        System.out.println(compo_name);
-        System.out.println(suppl_no);
-        System.out.println(proposal);
-
         return proposal;
     }
     @GetMapping("/contract/{proposal_no}")
     public ProposalVO getProposaltoContract(@PathVariable String proposal_no){
 
-    return service.getProposaltoContract(proposal_no);
+        return service.getProposaltoContract(proposal_no);
     }
 //@GetMapping("/proposal/{compo_name}/{suppl_no}")
 //public ResponseEntity<String> getProposal(@PathVariable String compo_name, @PathVariable String suppl_no){
@@ -88,5 +86,20 @@ public List<SupplierVO> selectedSuppl(@PathVariable String compo_name){
 
         return ResponseEntity.created(location).build();
     }
+
+    @GetMapping("/contracts")
+    public List<ContractVO> allContracts(){
+        List<ContractVO> contracts = service.allContracts();
+        for(ContractVO contract : contracts){
+
+        }
+        return contracts;
+    }
+
+    @GetMapping("/comparsionRetailer/{prod_name}")
+    public List<RetailerVO> selectedRetail(@PathVariable String prod_name){
+        return service.retailerList(prod_name);
+    }
+
 
 }

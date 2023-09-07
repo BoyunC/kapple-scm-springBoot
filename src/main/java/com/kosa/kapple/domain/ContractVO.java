@@ -9,8 +9,8 @@ public class ContractVO {
 	private String contract_no;
 	private String suppl_no;
 	private String compo_no;
-	private Date start_date;
-	private Date end_date;
-	private Date contract_date;
+	private String start_date;
+	private String end_date;
+	private String contract_date;
 	private String proposal_no;
 }

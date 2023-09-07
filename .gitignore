@@ -28,3 +28,5 @@ target/classes/mapper/mapperKW.xml
 target/classes/mapper/mapperMK.xml
 target/test-classes/com/kosa/kapple/KappleApplicationTests.class
 target/test-classes/com/kosa/kapple/mapper/MapperKWTest.class
+target/*
+.target/*
