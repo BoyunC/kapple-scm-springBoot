@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SalePredictVo {
+public class SalePredictVO {
 
     private String sale_predict_no;
     private Date sale_date;
