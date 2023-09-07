@@ -50,28 +50,28 @@
         <result property="detail" column="detail"/>
     </resultMap>
 
-    <select id="getProduceList" resultMap="ProduceMap">
-        <![CDATA[
-        select order_no, o.suppl_no, o.compo_no, price, quantity, delivery_date, order_date,
-               s.suppl_no, transport_no, suppl_name, ceo_name, category, phone,
-               c.compo_no, compo_name, unit, detail
-        from orders o
-                 LEFT OUTER JOIN supplier s
-                                 ON o.suppl_no = s.suppl_no
-                 LEFT OUTER JOIN component c
-                                 ON o.compo_no = c.compo_no
-        ]]>
-    </select>
+<!--    <select id="getProduceList" resultMap="ProduceMap">-->
+<!--        <![CDATA[-->
+<!--        select order_no, o.suppl_no, o.compo_no, price, quantity, delivery_date, order_date,-->
+<!--               s.suppl_no, transport_no, suppl_name, ceo_name, category, phone,-->
+<!--               c.compo_no, compo_name, unit, detail-->
+<!--        from orders o-->
+<!--                 LEFT OUTER JOIN supplier s-->
+<!--                                 ON o.suppl_no = s.suppl_no-->
+<!--                 LEFT OUTER JOIN component c-->
+<!--                                 ON o.compo_no = c.compo_no-->
+<!--        ]]>-->
+<!--    </select>-->
 
-    <resultMap type="OrdersVO" id="OrdersMap">
-        <id property="order_no" column="order_no"/>
-        <result property="price" column="price"/>
-        <result property="quantity" column="quantity"/>
-        <result property="delivery_date" column="delivery_date"/>
-        <result property="order_date" column="order_date"/>
-        <collection property="supplier" resultMap="SupplierMap"/>
-        <collection property="component" resultMap="ComponentMap"/>
-    </resultMap>
+<!--    <resultMap type="OrdersVO" id="OrdersMap">-->
+<!--        <id property="order_no" column="order_no"/>-->
+<!--        <result property="price" column="price"/>-->
+<!--        <result property="quantity" column="quantity"/>-->
+<!--        <result property="delivery_date" column="delivery_date"/>-->
+<!--        <result property="order_date" column="order_date"/>-->
+<!--        <collection property="supplier" resultMap="SupplierMap"/>-->
+<!--        <collection property="component" resultMap="ComponentMap"/>-->
+<!--    </resultMap>-->
 
 <!--    <select id="getCompoInventoryTurnover" resultType="float" parameterType="java.sql.Date">-->
 <!--    <![CDATA[-->
