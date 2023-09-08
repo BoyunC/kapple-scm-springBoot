@@ -87,9 +87,9 @@ public List<SupplierVO> selectedSuppl(@PathVariable String compo_name){
     @GetMapping("/contracts")
     public List<ContractVO> allContracts(){
         List<ContractVO> contracts = service.allContracts();
-        for(ContractVO contract : contracts){
-
-        }
+//        for(ContractVO contract : contracts){
+//
+//        }
         return contracts;
     }
 
