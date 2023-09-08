@@ -25,22 +25,142 @@
 		]]>
     </insert>
 
-        <!-- 공급사 파일 등록 -->
-        <insert id="saveFile">
-    		<![CDATA[
-            INSERT INTO SUPPL_FILE (UUID, FILE_NAME, PATH, CREATED_AT)
-            VALUES (#{uuid}, #{file_name}, #{path}, sysdate)
-            ]]>
-        </insert>
 
-        <!--  공급사 파일 공급사 번호 업데이트 -->
-        <update id="updateFile">
-    	    <![CDATA[
-            UPDATE SUPPL_FILE
-            SET SUPPL_NO = #{suppl_no}
-            WHERE UUID = #{uuid}
-            ]]>
-    	</update>
+
+    <!-- 공급사 파일 등록 -->
+    <insert id="saveFile">
+        <![CDATA[
+        INSERT INTO SUPPL_FILE (UUID, FILE_NAME, PATH, CREATED_AT)
+        VALUES (#{uuid}, #{file_name}, #{path}, sysdate)
+        ]]>
+    </insert>
+
+    <!--  공급사 파일 공급사 번호 업데이트 -->
+    <update id="updateFile">
+        <![CDATA[
+        UPDATE SUPPL_FILE
+        SET SUPPL_NO = #{suppl_no}
+        WHERE UUID = #{uuid}
+        ]]>
+    </update>
+
+    <!-- 공급사 로고 등록 -->
+    <insert id="saveLogo">
+        <![CDATA[
+        INSERT INTO SUPPL_LOGO (UUID, FILE_NAME, PATH, CREATED_AT)
+        VALUES (#{uuid}, #{logo_name}, #{path}, sysdate)
+        ]]>
+    </insert>
+
+    <!--  공급사 로고 공급사 번호 업데이트 -->
+    <update id="updateLogo">
+        <![CDATA[
+        UPDATE SUPPL_LOGO
+        SET SUPPL_NO = #{suppl_no}
+        WHERE UUID = #{uuid}
+        ]]>
+    </update>
+
+    <!-- 임시 저장 -->
+    <insert id="saveDraft">
+        <selectKey keyProperty="draft_no" order="BEFORE" resultType="String">
+            select DRAFT_SEQ.nextval from dual
+        </selectKey>
+
+        <![CDATA[
+        INSERT INTO suppl_draft (
+            draft_no,
+            compo_no, compo_name, price, quantity, defective_rate, quality_grade, prod_period, pp_created_at, pp_updated_at, pp_status,
+            suppl_no, suppl_name, business_no, phone_number, business_type, business_item, address, detail, is_contracted, sp_created_at, sp_updated_at,
+            representative, company_type, employee_quantity, establishment_date, suppl_level, stock_type, profit, net_profit, debt_ratio, market_cap,
+            created_at
+        ) VALUES (
+            #{draft_no},
+            #{compo_no}, #{compo_name}, #{price}, #{quantity}, #{defective_rate}, #{quality_grade}, #{prod_period}, #{pp_created_at}, #{pp_updated_at}, #{pp_status},
+            #{suppl_no}, #{suppl_name}, #{business_no}, #{phone_number}, #{business_type}, #{business_item}, #{address}, #{detail}, #{is_contracted}, #{sp_created_at}, #{sp_updated_at},
+            #{representative}, #{company_type}, #{employee_quantity}, #{establishment_date}, #{suppl_level}, #{stock_type}, #{profit}, #{net_profit}, #{debt_ratio}, #{market_cap},
+            sysdate
+        )
+        ]]>
+    </insert>
+
+    <!-- 임시 저장 리스트 -->
+    <select id="getAllDrafts" resultType="ResponseDraft">
+		<![CDATA[
+        select *
+        from suppl_draft
+        order by draft_no
+        ]]>
+	</select>
+
+    <!-- 임시 저장 상세 조회 -->
+    <select id="getOneDraft" resultType="ResponseDraft">
+		<![CDATA[
+        select *
+        from suppl_draft
+        where draft_no = #{draft_no}
+        ]]>
+	</select>
+
+    <!-- 임시 저장 삭제 -->
+    <delete id="deleteDraft" >
+		<![CDATA[
+        delete
+        from suppl_draft
+        where draft_no = #{draft_no}
+        ]]>
+	</delete>
+
+    <!-- 공급사 리스트 가져오기 -->
+    <resultMap id="supplierResultMap" type="ResponseSupplier">
+        <id property="suppl_no" column="suppl_no"/>
+        <result property="suppl_name" column="suppl_name"/>
+        <result property="business_no" column="business_no"/>
+        <result property="phone_number" column="phone_number"/>
+        <result property="business_type" column="business_type"/>
+        <result property="business_item" column="business_item"/>
+        <result property="address" column="address"/>
+        <result property="detail" column="detail"/>
+        <result property="is_contracted" column="is_contracted"/>
+        <result property="sp_created_at" column="sp_created_at"/>
+        <result property="sp_updated_at" column="sp_updated_at"/>
+        <result property="representative" column="representative"/>
+        <result property="company_type" column="company_type"/>
+        <result property="employee_quantity" column="employee_quantity"/>
+        <result property="establishment_date" column="establishment_date"/>
+        <result property="suppl_level" column="suppl_level"/>
+        <result property="stock_type" column="stock_type"/>
+        <result property="profit" column="profit"/>
+        <result property="net_profit" column="net_profit"/>
+        <result property="debt_ratio" column="debt_ratio"/>
+        <result property="market_cap" column="market_cap"/>
+        <result property="website" column="website"/>
+        <result property="logo_name" column="logo_name"/>
+
+        <!-- ResponseLogo 클래스에 대한 resultMap 포함 -->
+        <association property="responseLogo" resultMap="logoResultMap"/>
+    </resultMap>
+
+    <resultMap id="logoResultMap" type="ResponseLogo">
+        <id property="uuid" column="uuid"/>
+        <result property="suppl_no" column="suppl_no"/>
+        <result property="logo_name" column="logo_name"/>
+        <result property="path" column="path"/>
+    </resultMap>
+
+    <!-- 조인된 결과를 매핑하는 SQL -->
+    <select id="getAllSuppliers2" resultMap="supplierResultMap">
+        SELECT
+            s.suppl_no, s.suppl_name, s.business_no, s.phone_number, s.business_type,
+            s.business_item, s.address, s.detail, s.is_contracted, s.sp_created_at,
+            s.sp_updated_at, s.representative, s.company_type, s.employee_quantity, s.establishment_date,
+            s.suppl_level, s.stock_type, s.profit, s.net_profit, s.debt_ratio,
+            s.market_cap, s.website,
+            l.logo_name, l.uuid, l.path
+        FROM
+            supplier2 s INNER JOIN suppl_logo l
+        ON s.suppl_no = l.suppl_no;
+    </select>
 
 
 

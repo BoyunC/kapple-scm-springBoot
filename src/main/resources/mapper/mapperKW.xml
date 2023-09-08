@@ -123,7 +123,7 @@
 <!--        <result property="release_date" column="release_date"/>-->
 <!--        <result property="model_name" column="model_name"/>-->
 <!--    </resultMap>-->
-    <resultMap type="SalePredictVO" id="salePredictMap">
+    <resultMap type="SalePredictVO2" id="salePredictMap">
         <id property="sale_predict_no" column="sale_predict_no"/>
         <result property="sale_predict_no" column="sale_predict_no"/>
         <result property="sales_amount" column="sales_amount"/>
